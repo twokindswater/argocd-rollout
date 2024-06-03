@@ -1,22 +1,22 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: rollouts-demo-vsvc1
+  name: {{ .Values.name }}-vsvc1
 spec:
   gateways:
-    - rollouts-demo-gateway
+    - {{ .Values.name }}-gateway
   hosts:
-    - rollouts-demo-vsvc1.local
+    - {{ .Values.name }}-vsvc1.local
   http:
     - name: primary
       route:
         - destination:
-            host: rollouts-demo-stable
+            host: {{ .Values.name }}-stable
             port:
               number: 80
           weight: 100
         - destination:
-            host: rollouts-demo-canary
+            host: {{ .Values.name }}-canary
             port:
               number: 80
           weight: 0
@@ -25,22 +25,22 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: rollouts-demo-vsvc2
+  name: {{ .Values.name }}-vsvc2
 spec:
   gateways:
-    - rollouts-demo-gateway
+    - {{ .Values.name }}-gateway
   hosts:
-    - rollouts-demo-vsvc2.local
+    - {{ .Values.name }}-vsvc2.local
   http:
     - name: secondary
       route:
         - destination:
-            host: rollouts-demo-stable
+            host: {{ .Values.name }}-stable
             port:
               number: 80
           weight: 100
         - destination:
-            host: rollouts-demo-canary
+            host: {{ .Values.name }}-canary
             port:
               number: 80
           weight: 0
@@ -53,13 +53,13 @@ spec:
   hosts:
     - "*"
   gateways:
-    - rollouts-demo-gateway
+    - {{ .Values.name }}-gateway
   http:
     - match:
         - uri:
             prefix: ""
       route:
         - destination:
-            host: rollouts-demo-stable
+            host: {{ .Values.name }}-stable
             port:
                 number: 80

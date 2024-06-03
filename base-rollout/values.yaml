@@ -4,6 +4,8 @@
 
 replicaCount: 5
 
+namespace: "manager-rollout"
+
 image:
   repository: "asia-northeast3-docker.pkg.dev/jieum-dev/jongsoo/manager" # GKE artifact registry
 #  repository: "jongsoo/manager" # DockerHub

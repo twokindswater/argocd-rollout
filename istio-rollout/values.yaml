@@ -4,6 +4,9 @@
 
 replicaCount: 1
 
+name: "istio-rollout"
+namespace: "istio-rollout"
+
 image:
   repository: "asia-northeast3-docker.pkg.dev/jieum-dev/jongsoo/manager"
   pullPolicy: IfNotPresent

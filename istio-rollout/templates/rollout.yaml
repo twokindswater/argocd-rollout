@@ -1,20 +1,21 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: rollouts-demo
+  name: {{ .Values.name }}
+  namespace: {{ .Values.namespace }}
 spec:
   replicas: 1
   strategy:
     canary:
-      canaryService: rollouts-demo-canary
-      stableService: rollouts-demo-stable
+      canaryService: {{ .Values.name }}-canary
+      stableService: {{ .Values.name }}-stable
       trafficRouting:
         istio:
           virtualServices:
-            - name: rollouts-demo-vsvc1 # At least one virtualService is required
+            - name: {{ .Values.name }}-vsvc1 # At least one virtualService is required
               routes:
                 - primary # At least one route is required
-            - name: rollouts-demo-vsvc2
+            - name: {{ .Values.name }}-vsvc2
               routes:
                 - secondary # At least one route is required
       steps:
@@ -23,16 +24,16 @@ spec:
   revisionHistoryLimit: 2
   selector:
     matchLabels:
-      app: rollouts-demo
+      app: {{ .Values.name }}
   template:
     metadata:
       labels:
-        app: rollouts-demo
+        app: {{ .Values.name }}
         istio-injection: enabled
     spec:
       containers:
-        - name: rollouts-demo
-          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        - name: {{ .Values.name }}
+          image: {{ .Values.name }}
           ports:
             - name: http
               containerPort: 5000
