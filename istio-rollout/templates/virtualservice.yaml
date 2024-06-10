@@ -1,65 +1,22 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: {{ .Values.name }}-vsvc1
+  name: {{ .Values.name }}
 spec:
-  gateways:
-    - {{ .Values.name }}-gateway
   hosts:
-    - {{ .Values.name }}-vsvc1.local
+    - "*"
+  gateways:
+    - {{ .Values.name }}
   http:
     - name: primary
       route:
         - destination:
             host: {{ .Values.name }}-stable
             port:
-              number: 80
+              number: 5000
           weight: 100
         - destination:
             host: {{ .Values.name }}-canary
             port:
-              number: 80
+              number: 5000
           weight: 0
-
----
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: {{ .Values.name }}-vsvc2
-spec:
-  gateways:
-    - {{ .Values.name }}-gateway
-  hosts:
-    - {{ .Values.name }}-vsvc2.local
-  http:
-    - name: secondary
-      route:
-        - destination:
-            host: {{ .Values.name }}-stable
-            port:
-              number: 80
-          weight: 100
-        - destination:
-            host: {{ .Values.name }}-canary
-            port:
-              number: 80
-          weight: 0
----
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: default-vs
-spec:
-  hosts:
-    - "*"
-  gateways:
-    - {{ .Values.name }}-gateway
-  http:
-    - match:
-        - uri:
-            prefix: ""
-      route:
-        - destination:
-            host: {{ .Values.name }}-stable
-            port:
-                number: 80

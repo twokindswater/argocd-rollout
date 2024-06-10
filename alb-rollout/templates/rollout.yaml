@@ -4,24 +4,15 @@ metadata:
   name: {{ .Values.name }}
   namespace: {{ .Values.namespace }}
 spec:
-  replicas: 1
+  replicas: 5
   strategy:
     canary:
-      canaryService: {{ .Values.name }}-canary
-      stableService: {{ .Values.name }}-stable
-      trafficRouting:
-        alb:
-          ingress: {{ .Values.name }}-ingress
-          servicePort: 80
-          rootService: {{ .Values.name }}-root
       steps:
-        - setWeight: 5
-        - pause: {duration: 3m}
-        - setWeight: 30
-        - pause: {duration: 3m}
+        - setWeight: 10
+        - pause: {duration: 2m}
         - setWeight: 50
         - pause: {}
-  revisionHistoryLimit: 2
+  revisionHistoryLimit: 10
   selector:
     matchLabels:
       app: {{ .Values.name }}

@@ -6,7 +6,7 @@ metadata:
 spec:
   ports:
     - port: 80
-      targetPort: http
+      targetPort: 5000
       protocol: TCP
       name: http
   selector:
@@ -23,7 +23,7 @@ metadata:
 spec:
   ports:
     - port: 80
-      targetPort: http
+      targetPort: 5000
       protocol: TCP
       name: http
   selector:

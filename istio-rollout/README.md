@@ -5,6 +5,11 @@
 helm install istio-rollout ./istio-rollout
 ```
 
+단) namespace에 istio-injection option이 활성화 되어있어야 함
+```shell
+kubectl label namespace {{ NAMESPACE }} istio-injection=enabled
+```
+
 2. component validate 
 ```shell
 (base)  js@node1  ~/project/jieum/spc-jieum-cicd   main  k get ro

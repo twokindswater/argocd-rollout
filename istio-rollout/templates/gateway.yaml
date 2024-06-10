@@ -1,10 +1,11 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: {{ .Values.name }}-gateway
+  name: istio-rollout-gateway
 spec:
   selector:
     istio: ingressgateway # use istio default controller
+    namespace: default
   servers:
     - port:
         number: 80
